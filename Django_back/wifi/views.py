@@ -16,7 +16,7 @@ from rest_framework.decorators import api_view
 @api_view(['POST'])
 def toggle_wifi(request):
     action = request.data.get('action')  # 'on' ou 'off'
-
+    print(f"action = {action}")
     wifi = pywifi.PyWiFi()
     iface = wifi.interfaces()[0]  # Prend la première interface WiFi trouvée
 
