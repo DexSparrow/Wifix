@@ -1,0 +1,10 @@
+*.sqlite*
+*manage.py*
+*test*
+*__pycache__*
+*node_modules*
+*public*
+*build/*
+*dist/*
+*.env*
+*.DS_Store*
