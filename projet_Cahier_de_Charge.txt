@@ -1,0 +1,35 @@
+Gestion wifi:
+	Cote Client:
+	- Notre app sera une authentification de wifi :
+	- App pouvant montrer les wifi disponibles et les wifis connus ...
+		--> <list_wifi>
+	- Pour chaque wifi (clickable -> authentification ou connected si deja authentifie auparavant)
+	- On stocke les mot de passe dans une bd sqlite
+	- Bouton se deconnecter
+	- Gestion :
+		- Wifi information : bande passante , distance ...
+		- Wifi connus : Code Qr Pour pouvoir partager le code wifi
+		-
+	- UI/UX convaincante mieux que gnome et les autres app, voir templates si necessaires ...
+	Ex: Emoji <tsy manaiky> quand mot de passe invalide , Emoji souriant quand c'est valide
+		- Page de Bienvenue vous etes connecte
+	
+	- Bouton ON/OFF qui pourrait activer wifi
+	
+	...
+	
+	
+	Cote admin:
+	Monitoring:
+		- Selectionner un wifi a administrer : # L'admin doit se connecter a ce wifi
+			--> <list_wifi> # creer auparavant
+		- Visionnage des utilisateurs authentifies (CRUD)
+		- Cote client:
+			- Login/Logout Page
+
+--> On va d'abord developper l'application cote client , on atteint le stade "projet presentable",
+--> 
+	Si est_fini(cote_client):
+		-> On developpe le cote admin , on atteint le stade "projet excellente"	
+	Sinon :
+		-> finir(cote_client)
