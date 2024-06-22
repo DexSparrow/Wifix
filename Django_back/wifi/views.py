@@ -10,6 +10,25 @@ import json
 import pywifi
 from pywifi import const
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+
+
+@api_view(['POST'])
+def toggle_wifi(request):
+    action = request.data.get('action')  # 'on' ou 'off'
+
+    wifi = pywifi.PyWiFi()
+    iface = wifi.interfaces()[0]  # Prend la première interface WiFi trouvée
+
+    if action == 'on':
+        iface.scan()
+        iface.connect(iface.scan_results()[0])
+        return Response({'message': 'WiFi activated.'}, status=status.HTTP_200_OK)
+    elif action == 'off':
+        iface.disconnect()
+        return Response({'message': 'WiFi deactivated.'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Invalid action.'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def wifi_list(request):
