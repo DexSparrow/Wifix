@@ -1,6 +1,7 @@
 // WifiList.js
 import React, { useState, useEffect } from 'react';
-import './styles.css';
+import WifiItem from './WifiItem';
+import './WifiList.css';
 
 const WifiList = ({ connectToWifi }) => {
     const [wifiList, setWifiList] = useState([]);
@@ -46,28 +47,17 @@ const WifiList = ({ connectToWifi }) => {
     };
 
     return (
-        <div className="wifi-list">
-            <h2>WiFi Networks</h2>
-            <ul>
-                {wifiList.map(network => (
-                    <li key={network.SSID} className="network">
-                        <strong>SSID:</strong> {network.SSID}, <strong>Signal:</strong> {network.Signal}
-                        <form onSubmit={(e) => {
-                            e.preventDefault();
-                            const password = e.target.elements.password.value;
-                            handleConnect(network.SSID, password);
-                        }}>
-                            <input type="password" name="password" placeholder="Password" required />
-                            <button type="submit">Connect</button>
-                        </form>
-                        {connectionStatus[network.SSID] === 'connecting' && <p>Connecting...</p>}
-                        {connectionStatus[network.SSID] === 'connected' && <p>Connected!</p>}
-                        {connectionStatus[network.SSID] === 'failed' && <p>Connection failed. Please try again.</p>}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <div className='wifi-list'>
+        {wifiList.map((network) => (
+          <WifiItem key={network.Signal} name={network.SSID} />
+        ))}
+      </div>
+
     );
-};
+};  
+  
 
 export default WifiList;
+// src/components/WifiList.js
+
+

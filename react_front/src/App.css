@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,31 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+
+
+
+/* src/App.css */
+body{
+  margin: 0;
+  padding: 0;
+}
+.App {
+  text-align: center;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  width: 200px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
 }

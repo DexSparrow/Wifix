@@ -1,0 +1,67 @@
+/* src/components/WifiItem.css */
+.wifi-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: red;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    width: 46%;
+    margin: auto;
+    border: solid;
+    border-width: 0.1px;
+    border-color: white;
+    transition: width 0.3s;
+    transition: background 1s;
+}
+
+.wifi-item:hover{
+  cursor: pointer;
+  width: 45.8%;
+  background: rgb(234, 72, 72);
+}
+
+  .wifi-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .wifi-info i {
+    margin-right: 10px;
+  }
+  .wifi-info span {
+    margin-left: 8px;
+  }
+  .wifi-actions{
+    display: flex;
+    align-items: center;
+    /* margin-right: 20%; */
+  }
+  .wifi-actions .btn {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    font-size: 24px;
+    border: none;
+    transition: background 0.4s;
+  }
+
+  .wifi-actions .btn:hover{
+    cursor: pointer;
+    background: white;
+  }
+  
+  .wifi-actions .blue {
+    background-color: transparent;
+    color: white;
+  }
+  
+  .wifi-actions .settings {
+    background-color: transparent;
+  }
+  
+  .wifi-actions .settings i {
+    color: grey;
+  }
+  
