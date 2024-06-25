@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 import wifi
 import json
+
 import pywifi
 from pywifi import const
 from django.http import JsonResponse
