@@ -1,14 +1,38 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import Lottie from 'react-lottie';
 import './WifiPasswordModal.css';
+
+// Importer les fichiers d'animation JSON
+import nodAnimation from '../animations/Animation_smiley.json';
+import shakeAnimation from '../animations/Animation_disagree.json';
 
 const WifiPasswordModal = ({ isOpen, onRequestClose, wifiName, handleConnect }) => {
   const [password, setPassword] = useState('');
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(null); // null, true, false
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleConnect(password);
-    onRequestClose();
+    setIsLoading(true);
+
+    try {
+      const isConnected = await handleConnect(wifiName, password);
+      setIsPasswordCorrect(isConnected);
+    } catch (error) {
+      setIsPasswordCorrect(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: isPasswordCorrect ? nodAnimation : shakeAnimation,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
   };
 
   return (
@@ -28,7 +52,10 @@ const WifiPasswordModal = ({ isOpen, onRequestClose, wifiName, handleConnect }) 
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsPasswordCorrect(null); // Réinitialise l'état lorsque l'utilisateur tape un nouveau mot de passe
+            }}
             required
           />
         </label>
@@ -36,11 +63,20 @@ const WifiPasswordModal = ({ isOpen, onRequestClose, wifiName, handleConnect }) 
           <button type="button" onClick={onRequestClose} className="cancel-button">
             Cancel
           </button>
-          <button type="submit" className="apply-button">
-            Connect
+          <button type="submit" className="apply-button" disabled={isLoading}>
+            {isLoading ? 'Connecting...' : 'Connect'}
           </button>
         </div>
       </form>
+      {isPasswordCorrect !== null && (
+        <div className="animation-container">
+          <Lottie
+            options={defaultOptions}
+            height={100}
+            width={100}
+          />
+        </div>
+      )}
     </Modal>
   );
 };

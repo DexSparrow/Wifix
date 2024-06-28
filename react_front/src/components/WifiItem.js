@@ -25,12 +25,8 @@ const WifiItem = ({ name, connectToWifi }) => {
     setPasswordModalIsOpen(false);
   };
 
-  const handleConnect = (password) => {
-    connectToWifi(name, password);
-  };
-
   return (
-    <div className="wifi-item" >
+    <div className="wifi-item">
       <div className="wifi-info" onClick={openPasswordModal}>
         <i className="fas fa-wifi"></i>
         <span>{name}</span>
@@ -54,7 +50,7 @@ const WifiItem = ({ name, connectToWifi }) => {
         isOpen={passwordModalIsOpen}
         onRequestClose={closePasswordModal}
         wifiName={name}
-        handleConnect={handleConnect}
+        handleConnect={connectToWifi}
       />
     </div>
   );

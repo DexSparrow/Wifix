@@ -19,30 +19,32 @@ const WifiList = () => {
       [SSID]: 'connecting'
     }));
 
-    fetch('http://127.0.0.1:8000/api/connect/', {
+    return fetch('http://127.0.0.1:8000/api/connect/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ SSID, password })
     })
-      .then(response => {
-        if (response.ok) {
-          setConnectionStatus(prevStatus => ({
-            ...prevStatus,
-            [SSID]: 'connected'
-          }));
-        } else {
-          throw new Error('Connection failed');
-        }
-      })
-      .catch(error => {
-        console.error('Error connecting to WiFi:', error);
+    .then(response => {
+      if (response.ok) {
         setConnectionStatus(prevStatus => ({
           ...prevStatus,
-          [SSID]: 'failed'
+          [SSID]: 'connected'
         }));
-      });
+        return true; // Indique que la connexion a réussi
+      } else {
+        throw new Error('Connection failed');
+      }
+    })
+    .catch(error => {
+      console.error('Error connecting to WiFi:', error);
+      setConnectionStatus(prevStatus => ({
+        ...prevStatus,
+        [SSID]: 'failed'
+      }));
+      return false; // Indique que la connexion a échoué
+    });
   };
 
   return (
