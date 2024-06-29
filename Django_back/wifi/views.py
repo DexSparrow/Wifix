@@ -101,8 +101,13 @@ def connect_to_wifi(request):
 
 @api_view(['GET'])
 def generate_qr_code(request, ssid):
+    wifi_networks = WiFiNetwork.objects.filter(ssid=ssid)
+
+    if wifi_networks.count() > 1:
+        return Response({'error': 'Multiple WiFi networks found with the same SSID.'}, status=status.HTTP_400_BAD_REQUEST)
+
     try:
-        wifi_network = WiFiNetwork.objects.get(ssid=ssid)
+        wifi_network = wifi_networks.first()
         qr_data = f"WIFI:T:WPA;S:{wifi_network.ssid};P:{wifi_network.password};;"
         qr = qrcode.QRCode(
             version=1,
@@ -121,3 +126,5 @@ def generate_qr_code(request, ssid):
         return HttpResponse(buffer, content_type="image/png")
     except WiFiNetwork.DoesNotExist:
         return Response({'error': 'WiFi network not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        

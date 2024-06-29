@@ -33,7 +33,7 @@ const WifiItem = ({ name, connectToWifi }) => {
 
   const fetchQrCode = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/wifi/qr/${name}/`);
+      const response = await fetch(`http://127.0.0.1:8000/api/wifi/qr/${encodeURIComponent(name)}/`);
       const qrCodeBlob = await response.blob();
       const qrCodeUrl = URL.createObjectURL(qrCodeBlob);
       setQrCodeUrl(qrCodeUrl);
@@ -41,7 +41,7 @@ const WifiItem = ({ name, connectToWifi }) => {
       console.error('Error fetching QR code:', error);
     }
   };
-
+    
   return (
     <div className="wifi-item">
       <div className="wifi-info" onClick={openPasswordModal}>
