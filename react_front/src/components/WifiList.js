@@ -1,3 +1,4 @@
+// WifiList.js
 import React, { useState, useEffect } from 'react';
 import WifiItem from './WifiItem';
 import './WifiList.css';
@@ -14,6 +15,7 @@ const WifiList = () => {
   }, []);
 
   const handleConnect = (SSID, password) => {
+    console.log(SSID+" password : "+password);
     setConnectionStatus(prevStatus => ({
       ...prevStatus,
       [SSID]: 'connecting'
@@ -34,7 +36,11 @@ const WifiList = () => {
         }));
         return true; // Indique que la connexion a réussi
       } else {
-        throw new Error('Connection failed');
+        setConnectionStatus(prevStatus => ({
+          ...prevStatus,
+          [SSID]: 'failed'
+        }));
+        return false; // Indique que la connexion a échoué
       }
     })
     .catch(error => {
