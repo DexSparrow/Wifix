@@ -1,4 +1,4 @@
-// src/App.js
+//App.js
 import React, { useState } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar';
@@ -9,16 +9,16 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 
 const App = () => {
-  const [wifis, setWifis] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const handleSearchChange = (event) => {
-    // Logique pour gérer la recherche
+    setSearchText(event.target.value);
   };
 
   return (
     <div className="App">
       <SearchBar onChange={handleSearchChange} />
-      <WifiList wifis={wifis} />
+      <WifiList searchText={searchText} />
     </div>
   );
 };
