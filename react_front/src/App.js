@@ -1,6 +1,8 @@
 //App.js
 import React, { useState } from 'react';
 import './App.css';
+import './fontawesome-free-5.15.4-web/css/all.min.css';
+import './fontawesome-free-5.15.4-web/css/all.css';
 import SearchBar from './components/SearchBar';
 import WifiList from './components/WifiList';
 import Modal from 'react-modal';

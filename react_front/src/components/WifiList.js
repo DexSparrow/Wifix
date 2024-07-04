@@ -1,3 +1,6 @@
+//WifiList.js
+
+
 import React, { useState, useEffect } from 'react';
 import WifiItem from './WifiItem';
 import './WifiList.css';
@@ -77,6 +80,7 @@ const WifiList = ({ searchText }) => {
           key={`${network.SSID}-${network.Signal}`}
           name={network.SSID}
           connectToWifi={handleConnect}
+          akm={network.AKM}
         />
       )).reverse()} {/* Inverser l'ordre ici */}
     </div>

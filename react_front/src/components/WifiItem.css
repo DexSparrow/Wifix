@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: red;
+    background-color: #29BE91;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -13,13 +13,13 @@
     border-width: 0.1px;
     border-color: white;
     transition: width 0.3s;
-    transition: background 1s;
+    transition: background 0.6s;
 }
 
 .wifi-item:hover{
   cursor: pointer;
   width: 45.8%;
-  background: rgb(234, 72, 72);
+  background: #079E71;
 }
 
   .wifi-info {
@@ -62,6 +62,9 @@
   }
   
   .wifi-actions .settings i {
-    color: grey;
+    color: white;
   }
   
+  .icon_white{
+    color: white;
+  }

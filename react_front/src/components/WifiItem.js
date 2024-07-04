@@ -1,10 +1,9 @@
-//WIfiItem.js
 import React, { useState } from 'react';
 import WifiSettingsModal from './WifiSettingsModal';
 import WifiPasswordModal from './WifiPasswordModal';
 import './WifiItem.css';
 
-const WifiItem = ({ name, connectToWifi }) => {
+const WifiItem = ({ name, connectToWifi, akm }) => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState(false);
   const [passwordModalIsOpen, setPasswordModalIsOpen] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
@@ -20,14 +19,18 @@ const WifiItem = ({ name, connectToWifi }) => {
 
   const openPasswordModal = (e) => {
     e.stopPropagation(); // Prevent triggering the parent onClick event
-    setPasswordModalIsOpen(true);
+    if (akm !== 0) {
+      setPasswordModalIsOpen(true);
+    } else {
+      // On peut gérer ici une action alternative si nécessaire
+    }
   };
 
   const closePasswordModal = () => {
     setPasswordModalIsOpen(false);
   };
 
-  const handleConnect = (name,password) => {
+  const handleConnect = (name, password) => {
     return connectToWifi(name, password);
   };
 
@@ -41,11 +44,14 @@ const WifiItem = ({ name, connectToWifi }) => {
       console.error('Error fetching QR code:', error);
     }
   };
-    
+
   return (
     <div className="wifi-item">
       <div className="wifi-info" onClick={openPasswordModal}>
-        <i className="fas fa-wifi"></i>
+        <i className="fas fa-wifi icon_white"></i>
+        {akm !== 0 && ( // Condition pour afficher le cadenas
+          <i className="fas fa-lock icon_white" style={{ marginTop:'20px',marginLeft: '17px', color: '#333',fontSize:'8px',position:'absolute',color:'white'}}></i>
+        )}
         <span>{name}</span>
       </div>
       <div className="wifi-actions">

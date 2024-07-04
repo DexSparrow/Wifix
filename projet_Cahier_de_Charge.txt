@@ -13,7 +13,6 @@ Gestion wifi:
 	- UI/UX convaincante mieux que gnome et les autres app, voir templates si necessaires ...
 	Ex: Emoji <tsy manaiky> quand mot de passe invalide , Emoji souriant quand c'est valide
 		- Page de Bienvenue vous etes connecte
-	
 	- Bouton ON/OFF qui pourrait activer wifi
 	
 	...
