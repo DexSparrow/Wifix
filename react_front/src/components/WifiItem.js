@@ -1,13 +1,39 @@
 import React, { useState } from 'react';
 import WifiSettingsModal from './WifiSettingsModal';
 import WifiPasswordModal from './WifiPasswordModal';
+import WifiQrCodeModal from './Wifi_QrCodeModal';
 import './WifiItem.css';
 
-const WifiItem = ({ name, connectToWifi, akm }) => {
+const WifiItem = ({ id,name, connectToWifi, akm ,ping}) => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState(false);
   const [passwordModalIsOpen, setPasswordModalIsOpen] = useState(false);
-  const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [QrCodeModalIsOpen, setQrCodeModalIsOpen] = useState(false);
 
+
+  const clicked_item = async (e)=>{
+    e.stopPropagation(); // Prevent triggering the parent onClick event
+    if (akm !== 0) {
+      try {
+        const res = await ping(id);
+        closePasswordModal();        
+      } catch (error) {
+        console.log("Connected");
+        openPasswordModal();
+        //continue
+      } finally {
+        // setIsLoading(false);
+      } 
+    }
+    else {
+      // On peut gérer ici une action alternative si nécessaire
+    }
+  }
+
+  const openQrCodeModal = (e) => {
+    e.stopPropagation(); // Prevent triggering the parent onClick event
+    setQrCodeModalIsOpen(true);
+  };
+  
   const openSettingsModal = (e) => {
     e.stopPropagation(); // Prevent triggering the parent onClick event
     setSettingsModalIsOpen(true);
@@ -15,6 +41,10 @@ const WifiItem = ({ name, connectToWifi, akm }) => {
 
   const closeSettingsModal = () => {
     setSettingsModalIsOpen(false);
+  };
+
+  const closeQrCodeModal = () => {
+    setQrCodeModalIsOpen(false);
   };
 
   const openPasswordModal = (e) => {
@@ -30,24 +60,13 @@ const WifiItem = ({ name, connectToWifi, akm }) => {
     setPasswordModalIsOpen(false);
   };
 
-  const handleConnect = (name, password) => {
-    return connectToWifi(name, password);
-  };
-
-  const fetchQrCode = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/wifi/qr/${encodeURIComponent(name)}/`);
-      const qrCodeBlob = await response.blob();
-      const qrCodeUrl = URL.createObjectURL(qrCodeBlob);
-      setQrCodeUrl(qrCodeUrl);
-    } catch (error) {
-      console.error('Error fetching QR code:', error);
-    }
+  const handleConnect = (ID,name, password) => {
+    return connectToWifi(ID,name, password);
   };
 
   return (
     <div className="wifi-item">
-      <div className="wifi-info" onClick={openPasswordModal}>
+      <div className="wifi-info" onClick={clicked_item}>
         <i className="fas fa-wifi icon_white"></i>
         {akm !== 0 && ( // Condition pour afficher le cadenas
           <i className="fas fa-lock icon_white" style={{ marginTop:'20px',marginLeft: '17px', color: '#333',fontSize:'8px',position:'absolute',color:'white'}}></i>
@@ -55,22 +74,13 @@ const WifiItem = ({ name, connectToWifi, akm }) => {
         <span>{name}</span>
       </div>
       <div className="wifi-actions">
-        <button className="btn blue" onClick={(e) => {
-          e.stopPropagation();
-          fetchQrCode();
-        }}>
+        <button className="btn blue" onClick={openQrCodeModal}>
           <i className="fa fa-qrcode"></i>
         </button>
         <button className="btn settings" onClick={openSettingsModal}>
           <i className="fas fa-cog"></i>
         </button>
       </div>
-
-      {qrCodeUrl && (
-        <div className="qr-code">
-          <img src={qrCodeUrl} alt="QR Code" />
-        </div>
-      )}
 
       <WifiSettingsModal
         isOpen={settingsModalIsOpen}
@@ -83,7 +93,16 @@ const WifiItem = ({ name, connectToWifi, akm }) => {
         onRequestClose={closePasswordModal}
         wifiName={name}
         handleConnect={handleConnect}
+        id={id}
       />
+
+    <WifiQrCodeModal
+        isOpen={QrCodeModalIsOpen}
+        wifiName={name}
+        id={id}
+        onRequestClose={closeQrCodeModal}
+      />
+
     </div>
   );
 };

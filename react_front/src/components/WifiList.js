@@ -1,6 +1,5 @@
 //WifiList.js
 
-
 import React, { useState, useEffect } from 'react';
 import WifiItem from './WifiItem';
 import './WifiList.css';
@@ -14,28 +13,49 @@ const WifiList = ({ searchText }) => {
     fetch('http://127.0.0.1:8000/api/wifi/')
       .then(response => response.json())
       .then(data => {
-        const uniqueData = Array.from(new Set(data.map(network => network.SSID)))
-          .map(SSID => {
-            return data.find(network => network.SSID === SSID);
-          });
-        setWifiList(uniqueData);
+        setWifiList(data);
+        // const uniqueData = Array.from(new Set(data.map(network => network.SSID)))
+        //   .map(SSID => {
+        //     return data.find(network => network.SSID === SSID);
+        //   });
+        // setWifiList(uniqueData);        
+
       })
       .catch(error => console.error('Error fetching WiFi list:', error));
   }, []);
 
-  const handleConnect = (SSID, password) => {
-    console.log(SSID + " password : " + password);
+
+  const ping_connect = (ID) => {
+    fetch('http://127.0.0.1:8000/api/ping/',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ID})
+    }).then(response =>{
+        if(response.ok){
+          setConnectionStatus(prevStatus => ({
+            ...prevStatus,
+            [ID]: 'connected'
+          }));
+          return true; // Indique que la connexion a réussi
+        }
+        return false;
+      }
+      );
+  };
+  const handleConnect = (ID,SSID, password) => {
+    console.log(ID+"SSID:"+SSID + " password : " + password);
     setConnectionStatus(prevStatus => ({
       ...prevStatus,
       [SSID]: 'connecting'
     }));
-
     return fetch('http://127.0.0.1:8000/api/connect/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ SSID, password })
+      body: JSON.stringify({ ID, password })
     })
       .then(response => {
         if (response.ok) {
@@ -77,10 +97,12 @@ const WifiList = ({ searchText }) => {
     <div className='wifi-list'>
       {filteredWifiList.map((network) => (
         <WifiItem
-          key={`${network.SSID}-${network.Signal}`}
+          key={network.ID}
+          id={network.ID}
           name={network.SSID}
           connectToWifi={handleConnect}
           akm={network.AKM}
+          ping={ping_connect}
         />
       )).reverse()} {/* Inverser l'ordre ici */}
     </div>

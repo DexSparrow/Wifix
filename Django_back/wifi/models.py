@@ -6,7 +6,14 @@ class WiFiNetwork(models.Model):
     ssid = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     bssid = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
+    akm = models.IntegerField()
+    auth = models.IntegerField()
+    cipher = models.IntegerField()
+    # def __str__(self):
+    #     return self.bssid
 
-    def __str__(self):
-        return self.ssid
+# Wifi :
+#     - a cc
+#     - a cd
+#     - a
+

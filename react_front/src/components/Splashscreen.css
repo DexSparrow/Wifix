@@ -1,0 +1,348 @@
+
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    /*background: linear-gradient(135deg, #77B5FE, #25FDE9,#008);*/
+    /*background-color: #7FEFC1;*/
+    background-color: #50CDD6;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+      
+  }
+  
+  .splash-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background:transparent;
+    color: #104e84;
+    text-align: center;
+    padding: 0;
+    z-index: 1; 
+  }
+
+.splash-screen::before,
+.splash-screen::after {
+    content: '';
+    position: absolute;
+    z-index: 0; /* Donner une valeur z-index inférieure pour les triangles */
+   /* Utilisation de % ou vw pour rendre responsive */
+}
+  .splash-screen::before {
+    
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left:60vw solid transparent; /* Largeur du triangle */
+    border-top: 60vh solid #50CDD6; /* Hauteur et couleur du triangle */
+  }
+  
+  /* Triangle en bas à droite */
+  .splash-screen::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: 50vh solid transparent; /* Largeur du triangle */
+    border-left: 90vw solid #D2FEEE; /* Hauteur et couleur du triangle */
+  }
+  
+/*
+  .wifi-icon1 {
+    position: relative;
+    margin-bottom: calc(2.5vmin + 10px); 
+    margin-left: calc(10vmin + 360px); 
+}
+
+.wifi-icon2 {
+    position: relative;
+    margin-bottom: calc(5vmin + 35px); 
+    margin-right: calc(10vmin + 960px); 
+
+}
+
+.wifi-icon3 {
+    position: relative;
+    margin-bottom: calc(15vmin + 100px); 
+    margin-right: calc(10vmin - 260px); 
+
+}
+
+.wifi-icon4 {
+    position: relative;
+    margin-bottom: calc(20vmin ); 
+    margin-right: calc(10vmin + 660px); 
+
+}
+
+.wifi-icon5 {
+    position: relative;
+    margin-bottom: calc(25vmin ); 
+    margin-right: calc(10vmin - 660px); 
+
+}
+
+  .wave {
+    width: 15vmin;
+    height: 15vmin;
+    border: 10px solid white;
+    border-radius: 50%;
+    position: absolute;
+    opacity: 0;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .wave1 {
+    animation-delay: 0s;
+  }
+  
+  .wave2 {
+    animation-delay: 0.5s;
+  }
+  
+  .wave3 {
+    animation-delay: 1s;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.1);
+      opacity: 0.7;
+    }
+    70% {
+      transform: scale(1);
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+*/
+#wave-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2; 
+}
+
+.wave {
+  width: 15vmin;
+  height: 15vmin;
+  border: 10px solid white;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.circle1 {
+  background-color:#D2FEEE;
+  height: 6vmin;
+  width: 6vmin;
+  position: absolute;
+  bottom: 40%;
+  left:50%;
+  z-index: 2; 
+}
+.circle {
+  background-color: #50CDD6;
+  height: 3vmin; /* Taille du premier cercle */
+  width: 3vmin; /* Taille du premier cercle */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 25%;
+  animation: glow1 3s infinite;
+ /* box-shadow: 2px 2px 2px 2px white;*/
+  z-index: 2;
+}
+
+@keyframes glow1 {
+  19% {
+      background-color: #50CDD6;
+  }
+  20% {
+      background-color: #105B9E;
+  }
+  100% {
+      background-color: #105B9E;
+  }
+}
+
+.wifi {
+  height: 7.5vmin; /* Ajusté en conséquence */
+  width: 7.5vmin; /* Ajusté en conséquence */
+  border: 2.5vmin solid transparent; /* Ajusté en conséquence */
+  border-top: 2.5vmin solid #50CDD6; /* Ajusté en conséquence */
+  border-radius: 50%;
+  position: absolute;
+  top: -4vmin; /* Ajusté en conséquence */
+  left: -4.75vmin; /* Ajusté en conséquence */
+  animation: glow2 3s infinite;
+  box-shadow: -0.10px -2.5px 0px -2px white; /* Ajusté en conséquence */
+}
+
+@keyframes glow2 {
+  39% {
+      border-top-color: #50CDD6;
+  }
+  40% {
+      border-top-color: #105B9E;
+  }
+  100% {
+      border-top-color: #105B9E;
+  }
+}
+
+.wifi:before {
+  position: absolute;
+  content: "";
+  height: 16.5vmin; /* Ajusté en conséquence */
+  width: 16.5vmin; /* Ajusté en conséquence */
+  border: 2.5vmin solid transparent; /* Ajusté en conséquence */
+  border-top: 2.5vmin solid #50CDD6; /* Ajusté en conséquence */
+  border-radius: 50%;
+  right: -7vmin; /* Ajusté en conséquence */
+  top: -7.5vmin; /* Ajusté en conséquence */
+  animation: glow3 3s infinite;
+  box-shadow: -0.10px -2.5px 0px -2px white; /* Ajusté en conséquence */
+}
+
+@keyframes glow3 {
+  59% {
+      border-top-color: #50CDD6;
+  }
+  60% {
+      border-top-color: #105B9E;
+  }
+  100% {
+      border-top-color: #105B9E;
+  }
+}
+
+.wifi:after {
+  position: absolute;
+  content: "";
+  height: 26vmin; /* Ajusté en conséquence */
+  width: 26vmin; /* Ajusté en conséquence */
+  border: 2.5vmin solid transparent; /* Ajusté en conséquence */
+  border-top: 2.5vmin solid #50CDD6; /* Ajusté en conséquence */
+  border-radius: 50%;
+  left: -11.75vmin; /* Ajusté en conséquence */
+  top: -12.5vmin; /* Ajusté en conséquence */
+  animation: glow4 3s infinite;
+  box-shadow: -0.10px -2.5px 0px -2px white; /* Ajusté en conséquence */
+}
+
+@keyframes glow4 {
+  79% {
+      border-top-color: #50CDD6;
+  }
+  80% {
+      border-top-color: #105B9E;
+  }
+  100% {
+      border-top-color: #105B9E;
+  }
+}
+
+.wifi-background {
+  height: 30vmin; /* Taille du cercle de fond */
+  width: 30vmin; /* Taille du cercle de fond */
+  border-radius: 50%; /* Forme de cercle */
+  background-color: #D2FEEE; /* Couleur de fond bleu */
+  position: absolute;
+  top: -21vmin; /* Ajustez pour le positionnement vertical */
+  left: -14vmin; /* Ajustez pour le positionnement horizontal */
+  z-index: 1; /* Placez-le derrière le WiFi (z-index inférieur à 2) */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Ombre légère pour le relief */
+  z-index: 0;
+}
+
+  
+  
+  .text {
+    color: white;
+    text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+    display: inline-block;
+    font-size: 6em;
+
+    margin: 5px;
+  
+    animation: colorChange 100s , glow 100s   ;
+    animation-delay: calc(var(--index) * 0.1s);
+  }
+  
+  .text-container {
+   margin-top:10px;
+    display: flex;
+    padding:20px;
+    width:600px;
+    flex-wrap: wrap;
+    justify-content: center; /* Centre le texte */
+    box-shadow:2px 2px 2px 2px white;
+    border-radius: 50px;
+    z-index: 2;
+  
+  }
+
+  @keyframes colorChange {
+    0%, 100% { color: white; }
+   /* 25% { color: white }*/
+   /* 50% { color:white; }*/
+   /* 75% { color: #104884 }*/
+  }
+  
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 70px white, 0 0 40px white; }
+    /*50% { text-shadow: 0 0 20px white, 0 0 30px white; }*/
+
+  }
+
+  
+
+  .highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: translateX(-100%) skewX(45deg);
+    animation: slide 3s linear infinite;
+    z-index: 1;
+    filter: blur(30px); /* Ajouter un effet de flou */
+  }
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%) skewX(45deg);
+  }
+  50% {
+    transform: translateX(100%) skewX(45deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(45deg);
+  }
+}

@@ -1,40 +1,47 @@
-import React, { useState } from 'react';
+//WifiPasswordModal.js
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Lottie from 'react-lottie';
 import './WifiPasswordModal.css';
 
-import nodAnimation from '../animations/Animation_smiley.json';
+// Importer les fichiers d'animation JSON
+import nodAnimation from '../animations/Animation_smile.json';
 import shakeAnimation from '../animations/Animation_disagree.json';
 
-const WifiPasswordModal = ({ isOpen, onRequestClose, wifiName, handleConnect }) => {
+const WifiPasswordModal = ({ isOpen, onRequestClose, id,wifiName, handleConnect }) => {
   const [password, setPassword] = useState('');
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(null);
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(null); // null, true, false
   const [isLoading, setIsLoading] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      setShowAnimation(true);
+    } else {
+      setShowAnimation(false);
+      setIsPasswordCorrect(null);
+    }
+  }, [isOpen]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setShowAnimation(false);
 
     try {
-      const isConnected = await handleConnect(wifiName, password);
-      console.log("isconnected = "+isConnected);
+      const isConnected = await handleConnect(id,wifiName,password);
       setIsPasswordCorrect(isConnected);
-      setShowAnimation(true);
     } catch (error) {
       setIsPasswordCorrect(false);
-      setShowAnimation(true);
     } finally {
       setIsLoading(false);
     }
   };
 
   const defaultOptions = {
-    loop: false,
+    loop: true,
     autoplay: true,
-    animationData: isPasswordCorrect ? nodAnimation : shakeAnimation,
+    animationData: isPasswordCorrect === null ? nodAnimation : shakeAnimation,
     rendererSettings: {
       preserveAspectRatio: 'xMidYMid slice'
     }
@@ -66,40 +73,37 @@ const WifiPasswordModal = ({ isOpen, onRequestClose, wifiName, handleConnect }) 
         <h2 className="modal-title">Connect to {wifiName}</h2>
       </div>
       {!isMinimized && (
-        <>
-          <form className="modal-content" onSubmit={handleSubmit}>
-            <label>
-              Password:
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setIsPasswordCorrect(null);
-                  setShowAnimation(false);
-                }}
-                required
-              />
-            </label>
-            <div className="modal-actions">
-              <button type="button" onClick={handleClose} className="cancel-button">
-                Cancel
-              </button>
-              <button type="submit" className="apply-button" disabled={isLoading}>
-                {isLoading ? 'Connecting...' : 'Connect'}
-              </button>
-            </div>
-          </form>
+        <form className="modal-content" onSubmit={handleSubmit}>
           {showAnimation && (
             <div className="animation-container">
               <Lottie
                 options={defaultOptions}
-                height={100}
-                width={100}
+                height={60}
+                width={60}
               />
             </div>
           )}
-        </>
+
+          <input
+            type="password"
+            placeholder="Enter the password here"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setIsPasswordCorrect(null); // Réinitialise l'état lorsque l'utilisateur tape un nouveau mot de passe
+            }}
+            required
+          />
+
+          <div className="modal-actions">
+            <button type="button" onClick={handleClose} className="cancel-button">
+              Cancel
+            </button>
+            <button type="submit" className="apply-button" disabled={isLoading}>
+              {isLoading ? 'Connecting...' : 'Connect'}
+            </button>
+          </div>
+        </form>
       )}
     </Modal>
   );

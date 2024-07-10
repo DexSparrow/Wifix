@@ -1,5 +1,4 @@
 *.sqlite*
-*manage.py*
 *test*
 *__pycache__*
 *node_modules*

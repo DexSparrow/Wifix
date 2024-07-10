@@ -1,21 +1,33 @@
-/* src/components/SearchBar.css */
 .search-bar {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-  }
-  
-  .search-bar input {
-    width: 300px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .search-button {
-    background-color: #fff;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  position: relative; /* Nécessaire pour positionner l'icône absolument */
+  width: 320px; /* Ajustez en fonction de la largeur de l'input */
+  margin: 20px auto; /* Centre horizontalement */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* Ajout d'un padding à droite pour l'icône */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centrage de l'icône */
+  justify-content: center; /* Centrage de l'icône */
+  padding: 0;
+  color: #ccc; /* Couleur de l'icône */
+}
+
+.search-button i {
+  font-size: 16px; /* Taille de l'icône */
+}
